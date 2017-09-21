@@ -6,7 +6,7 @@ using System;
 using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour {
-
+    /*
     public float myTime;
     public Text textTime;
     private float starts;
@@ -57,5 +57,5 @@ public class Timer : MonoBehaviour {
         textTime.color = Color.red;
         SceneManager.LoadScene("LoseScreen");
     }
-
+    */
 }
