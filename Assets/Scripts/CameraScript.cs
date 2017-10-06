@@ -4,13 +4,35 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public Rigidbody2D CameraRB_;
+    public PlayerScript stalking;
+    private float cameraSpeed;
+
+    void Start()
+    {
+        CameraRB_ = GetComponent<Rigidbody2D>();    
+    }
+
+    void Update()
+    {
+        setSpeed();
+    }
+
+    void LateUpdate ()
+    {
+        CameraRB_.velocity = new Vector3(cameraSpeed,
+                                         transform.position.y,
+                                         transform.position.z);
+    }
+
+    private void setSpeed()
+    {
+       if (cameraSpeed <= stalking.PlayerPhysics_.velocity.x)
+       {
+           cameraSpeed = stalking.PlayerPhysics_.velocity.x;
+            print(cameraSpeed);
+       }
+    }
+
+
 }
