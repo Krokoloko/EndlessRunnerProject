@@ -25,7 +25,7 @@ public class CameraScript : MonoBehaviour {
                                          transform.position.z);
     }
 
-    void setSpeed()
+    private void setSpeed()
     {
        if (cameraSpeed <= stalking.PlayerPhysics_.velocity.x)
        {

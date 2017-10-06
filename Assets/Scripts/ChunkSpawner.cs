@@ -5,17 +5,20 @@ using UnityEngine;
 public class ChunkSpawner : MonoBehaviour {
     
     enum Stage {neutral, advanced, end};
-    public Ray2D spawners;
+    public Ray2D spawner;
     public GameObject neutralBlock;
     private Stage progression;
+    private int[] gaps = new int[5];
+    private List<int> gapBucket = new List<int>();
     private GameObject[] levelPieces = new GameObject[25];
-    private List<GameObject> bucket = new List<GameObject>();
+    private List<GameObject> lvlBucket = new List<GameObject>();
     private int[] chosenPieces;
     private float time;
 	// Use this for initialization
 	void Start () {
         progression = Stage.neutral;
         chosenPieces = randPieceInt(0, Mathf.RoundToInt(Random.Range(15, 25)), levelPieces);
+        spawner = new Ray2D(new Vector2(transform.position.x,transform.position.y),Vector2.down);
 	}
 	
 	// Update is called once per frame
@@ -43,14 +46,15 @@ public class ChunkSpawner : MonoBehaviour {
     }
     void neutralGenerate()
     {
-        Instantiate<GameObject>(neutralBlock,Vector3());
+        Instantiate<GameObject>(neutralBlock,new Vector3(transform.position.x,0,0),Quaternion.identity);
+        
         
     }
     void arangeBucket()        
     {
         for (int i = 0; i < chosenPieces.Length; i++)
         {
-            bucket.Add(levelPieces[chosenPieces[i]]);
+            lvlBucket.Add(levelPieces[chosenPieces[i]]);
         }
     }
 }
