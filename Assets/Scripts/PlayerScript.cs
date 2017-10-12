@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour {
 
+    public bool playerDebug;
     enum states { beginJump, midJump, uppperMomentum, falling, landing, running, dead, idle };
 
     public float _Speed_;
@@ -39,24 +40,24 @@ public class PlayerScript : MonoBehaviour {
         {
             case states.uppperMomentum:
                 jump();
-                //print(playerState);
+                if (playerDebug) print(playerState);
                 break;
             case states.running:
                 originalPos = transform.position.x;
                 jump();
-                //print(playerState);
+                if (playerDebug) print(playerState);
                 break;
             case states.falling:
                 falling(maxFallspeed);
                 checkGround();
-                //print(playerState);
+                if (playerDebug) print(playerState);
                 break;
             case states.landing:
-                //print(playerState);
+                if (playerDebug) print(playerState);
                 break;
             default:
                 playerState = states.falling;
-                //print(playerState);
+                if(playerDebug)print(playerState);
                 break;
 
         }
@@ -86,16 +87,13 @@ public class PlayerScript : MonoBehaviour {
         if (Input.GetKey(KeyCode.Space))
         {
             print("pressing");
-            //PlayerPhysics_.AddForce(Vector2.up * ySpeed * _Speed_);
             PlayerPhysics_.velocity = new Vector2(PlayerPhysics_.velocity.x, ySpeed * _Speed_);
-            //res = Vector2.up * jumpPower *_Speed_;
             playerState = states.uppperMomentum;
 
         }
         if (Input.GetKeyUp(KeyCode.Space) || (originalPos + maxHeight) <= transform.position.x)
         {
             print("released");
-            //res = Vector2.down * gravityForce *_Speed_;
             playerState = states.falling;
         }
 

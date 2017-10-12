@@ -7,9 +7,10 @@ public class CameraScript : MonoBehaviour {
     public Rigidbody2D CameraRB_;
     public PlayerScript stalking;
     private float cameraSpeed;
+    
 
     void Start()
-    {
+    {        
         CameraRB_ = GetComponent<Rigidbody2D>();    
     }
 
