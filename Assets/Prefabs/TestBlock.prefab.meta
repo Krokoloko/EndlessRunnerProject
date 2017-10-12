@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/TestBlock.prefab.meta
 guid: 300e41ff24a115b498884b76ca21ee15
 timeCreated: 1507536147
+=======
+guid: e97f3fe7d7422b1478e7ba821731450c
+timeCreated: 1507291430
+>>>>>>> origin/master:Assets/normal/no1.prefab.meta
 licenseType: Free
 NativeFormatImporter:
   mainObjectFileID: 100100000
