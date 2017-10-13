@@ -19,11 +19,12 @@ public class CameraScript : MonoBehaviour {
         CameraRB_ = GetComponent<Rigidbody2D>();
         CamCol = GetComponent<BoxCollider2D>();
         deathHeight = transform.position.y - (CamCol.size.y);
-        deathDistence = transform.position.x + (CamCol.size.x * 1.2f);
+        deathDistence = CameraRB_.transform.position.x - (CamCol.size.x*2);
     }
 
     void Update()
     {
+        deathDistence = CameraRB_.transform.position.x - (CamCol.size.x);
         setSpeed();
         checkOutsideCamera();
     }
@@ -38,19 +39,17 @@ public class CameraScript : MonoBehaviour {
 
     void checkOutsideCamera()
     {
-
-        deadEnd += (deathDistence - transform.position.x);
-        if (player.transform.position.x < deadEnd)
+       /* if (player.transform.position.x < deathDistence)
         {
             print("death by dist");
             SceneManager.LoadScene("GameRunner");            
-        }
+        }*/
         if(player.transform.position.y < deathHeight)
         {
             print("death by height");
             SceneManager.LoadScene("GameRunner");
         }
-        print(deadEnd);
+        print(deathDistence);
 
     }
     private void setSpeed()

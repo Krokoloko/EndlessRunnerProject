@@ -65,9 +65,9 @@ public class PlayerScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.rigidbody.transform.position.x > transform.position.x)
+        if(collision.transform.position.x > transform.position.x)
         {
-            if (collision.rigidbody.transform.position.y >= transform.position.y)
+            if (collision.transform.position.y >= transform.position.y)
             {
                 PlayerPhysics_.AddForce(Vector2.left);
             }
