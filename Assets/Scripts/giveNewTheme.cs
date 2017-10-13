@@ -9,10 +9,11 @@ public class giveNewTheme : MonoBehaviour {
     private GameObject[] yoshiTheme;
 
     private int lastUsed;
-    private GameObject[] res;
+    private GameObject[] res = new GameObject[25];
 	
 	public GameObject[] setTheme()
     {
+        
         int sug = Random.Range(1, 2);
         while (sug == lastUsed) {
             sug = Random.Range(1, 2);

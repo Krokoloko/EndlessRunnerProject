@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ChunkSpawner : MonoBehaviour {
-    
-    enum Stage {neutral, advanced, end};
+
     [SerializeField]
-    private GameObject Gen_;
+    private GameObject[] yoshiTheme;
+    [SerializeField]
+    private GameObject[] tetrisTheme;
+    private GameObject[] res = new GameObject[25];
+    private int lastUsed;
+    
+
+
+    enum Stage {neutral, advanced, end};
 
     public Ray2D checker;
     private RaycastHit2D checkerInfo;
@@ -17,17 +24,17 @@ public class ChunkSpawner : MonoBehaviour {
     [SerializeField]
     private Stage progression;
     private GameObject[] levelPieces = new GameObject[25];
-    private List<GameObject> lvlBucket = new List<GameObject>();
+    private List<BoxCollider2D> collisions = new List<BoxCollider2D>();
     private int[] chosenPieces;
     private float time;
     private float totalDis;
-    private giveNewTheme themeScript;
+    private GameObject EndChunk;
 	
 	void Start () {
-        themeScript = Gen_.GetComponent<giveNewTheme>();
-        levelPieces = themeScript.setTheme();
+        levelPieces = setTheme();
+        print(levelPieces);
         neutralBlock = levelPieces[0];
-        neutralCol = neutralBlock.GetComponent<BoxCollider2D>();
+        neutralCol = neutralBlock.GetComponentInChildren<BoxCollider2D>();
         progression = Stage.neutral;
         chosenPieces = RandPieceInt(15, 25, levelPieces);
         checker = new Ray2D(new Vector2(transform.position.x,transform.position.y),Vector2.down);
@@ -40,13 +47,12 @@ public class ChunkSpawner : MonoBehaviour {
                 SpawnNeutral(neutralBlock, neutralCol);
                 break;
             case Stage.advanced:
+                SpawnChunk();
                 break;
             case Stage.end:
                 chosenPieces = RandPieceInt(15,25,levelPieces);
-                progression = Stage.neutral;
                 break;
         }
-		
 	}
     public static int[] RandPieceInt(float min,float max, GameObject[] pieces)
     {   
@@ -73,21 +79,24 @@ public class ChunkSpawner : MonoBehaviour {
         float placementSet = totalDis;
         float chunkDist = placementSet;
         float distColli;
+        
         for (int i = 0;i < chosenPieces.Length; i++)
         {
-            BoxCollider2D colli = levelPieces[chosenPieces[i]].GetComponent<BoxCollider2D>();
-            distColli = colli.size.x;
-            GameObject Chunk = Instantiate(levelPieces[chosenPieces[i]],new Vector3(chunkDist,0,0),Quaternion.identity);
+            collisions.Add(levelPieces[chosenPieces[i]].GetComponentInChildren<BoxCollider2D>());
+            print(collisions[i]);
+            distColli = collisions[i].size.x;
+            GameObject Chunk = Instantiate(levelPieces[chosenPieces[i]],new Vector3(chunkDist + distColli,0,0),Quaternion.identity);
             chunkDist += distColli;
         }
-        GameObject EndChunk = Instantiate(levelPieces[25],new Vector3(chunkDist,0,0),Quaternion.identity);
+        EndChunk = Instantiate(levelPieces[25],new Vector3(chunkDist,0,0),Quaternion.identity);
+        progression = Stage.end;
     }
 
     private void ArangeBucket()        
     {
         for (int i = 0; i < chosenPieces.Length; i++)
         {
-            lvlBucket.Add(levelPieces[chosenPieces[i]]);
+            //lvlBucket.Add(levelPieces[chosenPieces[i]]);
         }
     }
 
@@ -113,5 +122,28 @@ public class ChunkSpawner : MonoBehaviour {
                 gaps[gapchance] = 0;
             }
         }
+        progression = Stage.advanced;
+    }
+    public GameObject[] setTheme()
+    {
+
+        int sug = Random.Range(1, 2);
+        while (sug == lastUsed)
+        {
+            sug = Random.Range(1, 2);
+        }
+        print(sug);
+        switch (sug)
+        {
+            case 1:
+                res = tetrisTheme;
+                lastUsed = 1;
+                break;
+            case 2:
+                lastUsed = 2;
+                res = yoshiTheme;
+                break;
+        }
+        return res;
     }
 }

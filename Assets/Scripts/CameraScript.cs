@@ -6,6 +6,9 @@ public class CameraScript : MonoBehaviour {
 
     public Rigidbody2D CameraRB_;
     public PlayerScript stalking;
+    public GameObject player; 
+    public float deathHeight;
+    public float deathDistence;
     private float cameraSpeed;
     
 
@@ -17,15 +20,24 @@ public class CameraScript : MonoBehaviour {
     void Update()
     {
         setSpeed();
+        checkOutsideCamera();
     }
 
     void LateUpdate ()
     {
-        CameraRB_.velocity = new Vector3(cameraSpeed,
+        CameraRB_.velocity = new Vector3(cameraSpeed - (cameraSpeed / 85),
                                          transform.position.y,
                                          transform.position.z);
     }
 
+    void checkOutsideCamera()
+    {
+        if (player.transform.position.x < transform.position.x + deathDistence || player.transform.position.y > transform.position.y + deathHeight)
+        {
+            print("Game over");
+        }
+    
+    }
     private void setSpeed()
     {
        if (cameraSpeed <= stalking.PlayerPhysics_.velocity.x)
