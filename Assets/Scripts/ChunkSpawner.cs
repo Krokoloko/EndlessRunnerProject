@@ -79,25 +79,18 @@ public class ChunkSpawner : MonoBehaviour {
         float placementSet = totalDis;
         float chunkDist = placementSet;
         float distColli;
-        
+
         for (int i = 0;i < chosenPieces.Length; i++)
         {
             collisions.Add(levelPieces[chosenPieces[i]].GetComponentInChildren<BoxCollider2D>());
             print(collisions[i]);
             distColli = collisions[i].size.x;
-            GameObject Chunk = Instantiate(levelPieces[chosenPieces[i]],new Vector3(chunkDist + distColli,0,0),Quaternion.identity);
+            GameObject Chunk = Instantiate(levelPieces[chosenPieces[i]],new Vector3(chunkDist + (distColli),0,0),Quaternion.identity);
             chunkDist += distColli;
         }
         EndChunk = Instantiate(levelPieces[25],new Vector3(chunkDist,0,0),Quaternion.identity);
         progression = Stage.end;
-    }
-
-    private void ArangeBucket()        
-    {
-        for (int i = 0; i < chosenPieces.Length; i++)
-        {
-            //lvlBucket.Add(levelPieces[chosenPieces[i]]);
-        }
+        collisions.Clear();
     }
 
     private void SpawnNeutral(GameObject object_, BoxCollider2D collider_)

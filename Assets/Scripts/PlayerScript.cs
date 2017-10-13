@@ -63,10 +63,19 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.rigidbody.transform.position.x > transform.position.x)
+        {
+            if (collision.rigidbody.transform.position.y >= transform.position.y)
+            {
+                PlayerPhysics_.AddForce(Vector2.left);
+            }
+        }
+    }
 
     void falling(float max)
     {
-            //res = Vector2.down * gravityForce *_Speed_;
             PlayerPhysics_.AddForce(Vector2.down * gravityForce * _Speed_);
             if (PlayerPhysics_.velocity.y <= max)
             {
@@ -86,14 +95,14 @@ public class PlayerScript : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            print("pressing");
+            //print("pressing");
             PlayerPhysics_.velocity = new Vector2(PlayerPhysics_.velocity.x, ySpeed * _Speed_);
             playerState = states.uppperMomentum;
 
         }
         if (Input.GetKeyUp(KeyCode.Space) || (originalPos + maxHeight) <= transform.position.x)
         {
-            print("released");
+            //print("released");
             playerState = states.falling;
         }
 
